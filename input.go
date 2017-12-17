@@ -31,9 +31,18 @@ type State struct {
 
 // NewLiner initializes a new *State, and sets the terminal into raw mode. To
 // restore the terminal to its previous state, call State.Close().
-func NewLiner() *State {
+func NewLiner(c *Config) *State {
 	var s State
 	s.r = bufio.NewReader(os.Stdin)
+
+	if c.Stdin != nil {
+		s.r = bufio.NewReader(c.Stdin)
+	}
+
+	s.stdout = os.Stdout
+	if c.Stdout != nil {
+		s.stdout = c.Stdout
+	}
 
 	s.terminalSupported = TerminalSupported()
 	if m, err := TerminalMode(); err == nil {

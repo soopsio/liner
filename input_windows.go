@@ -54,7 +54,7 @@ const (
 
 // NewLiner initializes a new *State, and sets the terminal into raw mode. To
 // restore the terminal to its previous state, call State.Close().
-func NewLiner() *State {
+func NewLiner(c *Config) *State {
 	var s State
 	hIn, _, _ := procGetStdHandle.Call(uintptr(std_input_handle))
 	s.handle = syscall.Handle(hIn)

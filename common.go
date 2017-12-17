@@ -27,12 +27,19 @@ type commonState struct {
 	killRing          *ring.Ring
 	ctrlCAborts       bool
 	r                 *bufio.Reader
+	stdout            io.Writer
 	tabStyle          TabStyle
 	multiLineMode     bool
 	cursorRows        int
 	maxRows           int
 	shouldRestart     ShouldRestart
 	needRefresh       bool
+}
+
+// 配置选项
+type Config struct {
+	Stdin  io.Reader
+	Stdout io.Writer
 }
 
 // TabStyle is used to select how tab completions are displayed.

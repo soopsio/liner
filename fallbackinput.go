@@ -28,9 +28,15 @@ func (s *State) PasswordPrompt(p string) (string, error) {
 //
 // Note that this operating system uses a fallback mode without line
 // editing. Patches welcome.
-func NewLiner() *State {
+func NewLiner(c *Config) *State {
 	var s State
+
 	s.r = bufio.NewReader(os.Stdin)
+
+	if c.Stdin != nil {
+		s.r = bufio.NewReader(c.Stdin)
+	}
+
 	return &s
 }
 
